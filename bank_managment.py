@@ -2,48 +2,60 @@
 import os
 import random
 import sys
+from colorama import Fore,Style,init
+
+init(autoreset=True)
 
 password = "7986"
 attempt = 0
 
 while attempt < 3:
-    lock = input("Plz Enter Your password: ")
+    lock = input(Fore.LIGHTMAGENTA_EX+"Plz Enter Your password: ")
     if lock == password:
-        print("Welcome to your bank account")
+        print("--------------------------------")
+        print(Fore.GREEN+"Welcome to your bank account")
+        print("--------------------------------")
         break
     else:
         attempt += 1
-        print("Wrong password")
+        print("--------------------------------")
+        print(Fore.YELLOW+"Wrong password")
+        print("--------------------------------")
 
     if attempt == 3:
-        print("Sorry! You have used all attempts for your bank account")
+        print("---------------------------------------------------------")
+        print(Fore.RED+"Sorry! You have used all attempts for your bank account")
+        print("---------------------------------------------------------")
         sys.exit()
+print(Style.BRIGHT+"=======STATE BANK OF INDIA=========")
 
 
 class Bank:
 
-    def __init__(self, Account_Number, Ifsc_code, Name, Father_name, Address, Gender,
-                 deposit_amount, withdraw_amount):
-        self.Account_Number = Account_Number
+    def __init__(self, Ifsc_code, Name, Father_name, Address, Gender, 
+                mobile_number,deposit_amount, withdraw_amount):
+        self.Account_Number = random.randint(100000000, 999999999)
         self.Ifsc_code = Ifsc_code
         self.Name = Name
         self.Father_name = Father_name
         self.address = Address
         self.Gender = Gender
-        self.Amount = random.randint(10000, 25000)
+        self.mobile_number = mobile_number
+        self.Amount = random.randint(10000, 250000)
         self.deposit_amount = deposit_amount
         self.withdraw_amount = withdraw_amount
         
     def display(self):
-        print("\n--------------------------------------------------")
-        print(f"Account Number:              {self.Account_Number}")
-        print(f"IFSC Code:                   {self.Ifsc_code}")
-        print(f"Name:                        {self.Name}")
-        print(f"Father's Name:               {self.Father_name}")
-        print(f"Address:                     {self.address}")
-        print(f"Gender:                      {self.Gender}")
-        print(f"Amount:                      {self.Amount}")
-        print(f"----------------------------------------------------")
+        print(Fore.MAGENTA+"\n--------------------------------------------------")
+        print(Fore.MAGENTA+f"Account Number:              {self.Account_Number}")
+        print(Fore.MAGENTA+f"IFSC Code:                   {self.Ifsc_code}")
+        print(Fore.MAGENTA+f"Name:                        {self.Name}")
+        print(Fore.MAGENTA+f"Father's Name:               {self.Father_name}")
+        print(Fore.MAGENTA+f"Address:                     {self.address}")
+        print(Fore.MAGENTA+f"Gender:                      {self.Gender}")
+        print(Fore.MAGENTA+f"Mobile Number:               {self.mobile_number}")
+        print(Fore.MAGENTA+f"Amount:                      {self.Amount}")
+        print(Fore.MAGENTA+f"----------------------------------------------------")
 
     def deposit(self):
         self.Amount += self.deposit_amount
@@ -52,7 +64,7 @@ class Bank:
         if self.withdraw_amount <= self.Amount:
            self.Amount -= self.withdraw_amount
         else:
-            print("Sorry ! Insufiicent Balance")
+            print(Fore.RED+"Sorry ! Insufiicent Balance")
 
 
 class Client():
@@ -62,23 +74,25 @@ class Client():
 
     def add_client(self):
 
-        Account_Number = int(input("Enter Your Account Number: "))
-        Ifsc_code = (input("Enter Your IFSC Code: "))
-        Name = input("Enter Your Name: ")
-        Father_name = input("Enter Your Father name: ")
-        Address = input("Enter Your Address: ")
-        Gender = input("Enter Gender: ")
-        Deposit = float(input(f"Enter your Deposit Amount: "))
-        Withdraw = float(input(f"Enter your Withdraw Amount: "))
+        Ifsc_code = (input(Fore.LIGHTMAGENTA_EX+"Enter Your IFSC Code: "))
+        Name = input(Fore.LIGHTMAGENTA_EX+"Enter Your Name: ")
+        Father_name = input(Fore.LIGHTMAGENTA_EX+"Enter Your Father name: ")
+        Address = input(Fore.LIGHTMAGENTA_EX+"Enter Your Address: ")
+        Gender = input(Fore.LIGHTMAGENTA_EX+"Enter Gender: ")
+        mob = int(input("Enter mobile number client: "))
+        Deposit = float(input(Fore.LIGHTMAGENTA_EX+f"Enter your Deposit Amount: "))
+        Withdraw = float(input(Fore.LIGHTMAGENTA_EX+f"Enter your Withdraw Amount: "))
 
-        s = Bank(Account_Number, 
+        s = Bank( 
                  Ifsc_code, 
                  Name,
                  Father_name,
                  Address,
                  Gender,
+                 mob,
                  Deposit,
-                 Withdraw)
+                 Withdraw
+                 )
         
         s.deposit()
         s.withdraw()
@@ -86,66 +100,66 @@ class Client():
         self.bank_client.append(s)
 
     def check_balance(self):
-        acc = int(input("Enter Account number for a client: "))
+        acc = int(input(Fore.LIGHTMAGENTA_EX+"Enter Account number for a client: "))
 
         for client in self.bank_client:
             if client.Account_Number == acc:
-                print("\n======== Balance Details ========")
-                print(f"Name:                {client.Name}")
-                print(f"Account Number:      {client.Account_Number}")
-                print(f"Current Balance:     {client.Amount}")
-                print(f"----------------------------------------------")
+                print(Style.BRIGHT+"\n======== Balance Details ========")
+                print(Fore.LIGHTBLUE_EX+f"Name:                {client.Name}")
+                print(Fore.LIGHTBLUE_EX+f"Account Number:      {client.Account_Number}")
+                print(Fore.LIGHTBLUE_EX+f"Current Balance:     {client.Amount}")
+                print(Fore.LIGHTBLUE_EX+f"----------------------------------------------")
                 return
 
-        print("Sorry! Account is not found")
+        print(Fore.RED+"Sorry! Account is not found")
 
     def history(self):
-        acc_n = int(input("Enter Account number for a client: "))
+        acc_n = int(input(Fore.LIGHTMAGENTA_EX+"Enter Account number for a client: "))
 
         for client in self.bank_client:
             if client.Account_Number == acc_n:
-                print("\n======== Balance History ========")
-                print(f"Name:                {client.Name}")
-                print(f"Account Number:      {client.Account_Number}")
-                print(f"Deposit Amount:      {client.deposit_amount}")
-                print(f"Withdraw Amount:     {client.withdraw_amount}")
-                print(f"Current Balance:     {client.Amount}")
-                print(f"----------------------------------------------")
+                print(Style.BRIGHT+"\n======== Balance History ========")
+                print(Fore.LIGHTYELLOW_EX+f"Name:                {client.Name}")
+                print(Fore.LIGHTYELLOW_EX+f"Account Number:      {client.Account_Number}")
+                print(Fore.LIGHTYELLOW_EX+f"Deposit Amount:      {client.deposit_amount}")
+                print(Fore.LIGHTYELLOW_EX+f"Withdraw Amount:     {client.withdraw_amount}")
+                print(Fore.LIGHTYELLOW_EX+f"Current Balance:     {client.Amount}")
+                print(Fore.LIGHTYELLOW_EX+f"----------------------------------------------")
                 return
 
-        print("Sorry! Account is not found")
+        print(Fore.RED+"Sorry! Account is not found")
 
     def add_money(self):
-        add_amount = int(input("Enter account number for a client: "))
-        deposit_amount = float(input("Enter deposit amount: "))
+        add_amount = int(input(Fore.LIGHTMAGENTA_EX+"Enter account number for a client: "))
+        deposit_amount = float(input(Fore.LIGHTMAGENTA_EX+"Enter deposit amount: "))
 
         for client in self.bank_client:
             if client.Account_Number == add_amount:
                 client.Amount += deposit_amount
-                print("\n===================Add Amount======================")
-                print(f"Name:                                {client.Name}")
-                print(f"Account Number:                      {client.Account_Number}")
-                print(f"Deposit Amount:                      {deposit_amount}")
-                print(f"Your Bank balance After Deposit is:  {client.Amount}")
-                print(f"------------------------------------------------------")
+                print(Style.BRIGHT+"\n===================Add Amount======================")
+                print(Fore.GREEN+f"Name:                                {client.Name}")
+                print(Fore.GREEN+f"Account Number:                      {client.Account_Number}")
+                print(Fore.GREEN+f"Deposit Amount:                      {deposit_amount}")
+                print(Fore.GREEN+f"Your Bank balance After Deposit is:  {client.Amount}")
+                print(Fore.GREEN+f"------------------------------------------------------")
                 return
 
-        print("Sorry! Account is not found")
+        print(Fore.RED+"Sorry! Account is not found")
 
     def withdraw_money(self):
-        withdraw_amount = int(input("Enter account number for a client: "))
-        amount = float(input("Enter withdraw amount: "))
+        withdraw_amount = int(input(Fore.LIGHTMAGENTA_EX+"Enter account number for a client: "))
+        amount = float(input(Fore.LIGHTMAGENTA_EX+"Enter withdraw amount: "))
 
         for client in self.bank_client:
             if client.Account_Number == withdraw_amount:
                 if amount <= client.Amount:
                     client.Amount -= amount
-                    print("\n===================Withdraw Amount======================")
-                    print(f"Name:                                {client.Name}")
-                    print(f"Account Number:                      {client.Account_Number}")
-                    print(f"Withdraw Amount:                     {amount}")
-                    print(f"Your Bank balance After Withdraw is: {client.Amount}")
-                    print(f"------------------------------------------------------")
+                    print(Style.BRIGHT+"\n===================Withdraw Amount======================")
+                    print(Fore.CYAN+f"Name:                                {client.Name}")
+                    print(Fore.CYAN+f"Account Number:                      {client.Account_Number}")
+                    print(Fore.CYAN+f"Withdraw Amount:                     {amount}")
+                    print(Fore.CYAN+f"Your Bank balance After Withdraw is: {client.Amount}")
+                    print(Fore.CYAN+f"------------------------------------------------------")
 
                 elif withdraw_amount > client.Amount:
                     print("Sorry! Insufficient Balance")
@@ -171,16 +185,17 @@ client = Client()
 
 while True:
 
-    print("\n============BANK MANAGEMENT==============")
-    print("\n============STATE BANK OF INDIA============")
-    print("1. Add Client")
-    print("2. show Client")
-    print("3: check balance")
-    print("4: Balance History")
-    print("5: Add Money")
-    print("6: Exit")
+    print(Fore.LIGHTCYAN_EX+"\n============BANK MANAGEMENT==============")
+    print(Fore.LIGHTCYAN_EX+"\n============STATE BANK OF INDIA============")
+    print(Fore.LIGHTGREEN_EX+"1. Add Client")
+    print(Fore.LIGHTGREEN_EX+"2. show Client")
+    print(Fore.LIGHTGREEN_EX+"3: check balance")
+    print(Fore.LIGHTGREEN_EX+"4: Withdraw Money")
+    print(Fore.LIGHTGREEN_EX+"5: Add Money")
+    print(Fore.LIGHTGREEN_EX+"6: Balance History")
+    print(Fore.LIGHTGREEN_EX+"7: Exit")
 
-    choice = input("Enter a chioce: ")
+    choice = input(Fore.LIGHTMAGENTA_EX+"Enter a chioce: ")
 
     if choice == "1":
 
@@ -194,12 +209,15 @@ while True:
         client.check_balance()
 
     elif choice == "4":
-        client.history()
+        client.withdraw_money()
 
     elif choice == "5":
         client.add_money()
 
     elif choice == "6":
+        client.history()
+
+    elif choice == "7":
         print("Thank You!")
         break
 
