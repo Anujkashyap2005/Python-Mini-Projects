@@ -1,7 +1,32 @@
 import os
+import sys
+import getpass
 
+password = "5887"
+attempt = 0
 
-class Student:
+while attempt < 3:
+    lock = getpass.getpass("Plz Enter Your Password: ")
+
+    if lock == password:
+        print("-----------------------------")
+        print("Welcome to your school page")
+        print("-----------------------------")
+        break
+
+    else:
+        attempt += 1
+        print("-----------------------------")
+        print("Wrong Password")
+        print("-----------------------------")
+
+    if attempt == 3:
+        print("-------------------------------------------------------")
+        print("You have use passeord 3 time plz typed correct password")
+        print("-------------------------------------------------------")
+        sys.exit()
+
+class Student():
 
     def __init__(self, roll_no, name, class_no, marks, attendance, fees):
         self.roll_no = roll_no
@@ -68,6 +93,24 @@ class School:
 
         print("\nStudent Added Successfully.")
 
+    def add_fees(self):
+        Roll_n = int(input("Enter Student roll number: "))
+        student_name = input("Enter Student name: ")
+
+        for School in self.students:
+            fees = int(input("Enter add fees amount:"))
+            if School.roll_no == Roll_n:
+                if School.name == student_name:
+                    print("\n=========Add fees for this student==========")
+                    print(f"Student Name is: {School.name}")
+                    print(f"Student roll number is: {School.roll_no}")
+                    print(f"Add fees for this student: {fees}")
+                    print("----------------------------------------------")
+                    return
+        
+                else:
+                    print("Sorry! No Student find out")
+
     def show_students(self):
 
         if len(self.students) == 0:
@@ -84,6 +127,7 @@ while True:
     print("\n====== STUDENT MANAGEMENT ======")
     print("1. Add Student")
     print("2. Show Students")
+    print("3. Add fees")
     print("3. Exit")
 
     choice = input("Enter Choice : ")
@@ -95,6 +139,9 @@ while True:
         school.show_students()
 
     elif choice == "3":
+        school.add_fees()
+
+    elif choice == "4":
         print("Thank You")
         break
 
